@@ -399,6 +399,7 @@ export const getPawnAvailableMoves = (
   coords: Coords,
   color: Colors,
   boardConfig: BoardConfiguration,
+  history: GameHistory,
 ) => {
   const availableMoves: Coords[] = []
 
@@ -434,7 +435,10 @@ export const getPawnAvailableMoves = (
     availableMoves.push({ x: coords.x + 1, y: nextY })
   }
 
-  return availableMoves
+  return [
+    ...availableMoves,
+    ...getPawnEnPassantMoves(coords, color, boardConfig, history),
+  ]
 }
 
 export const getPawnEnPassantMoves = (
@@ -714,10 +718,7 @@ export const getAvailableMoves = (
 
   switch (figure.type) {
     case Figures.Pawn:
-      return [
-        ...getPawnAvailableMoves(coords, color, config),
-        ...getPawnEnPassantMoves(coords, color, config, history),
-      ]
+      return getPawnAvailableMoves(coords, color, config, history)
     case Figures.Rook:
       return getRookAvailableMoves(coords, color, config)
     case Figures.Bishop:
