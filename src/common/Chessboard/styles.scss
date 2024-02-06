@@ -1,0 +1,58 @@
+.chessboard {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.chessboard__row {
+  display: flex;
+}
+
+.chessboard__cell {
+  position: relative;
+  cursor: default;
+  width: toRem(64);
+  height: toRem(64);
+
+  &--white {
+    background-color: var(--light-square);
+  }
+
+  &--black {
+    background-color: var(--dark-square);
+  }
+
+  &--chosen.chessboard__cell--black {
+    background-color: var(--chosen-dark-square);
+  }
+
+  &--chosen.chessboard__cell--white {
+    background-color: var(--chosen-light-square);
+  }
+}
+
+.chessboard__available-move-dot {
+  width: toRem(16);
+  height: toRem(16);
+  border-radius: 50%;
+  background-color: var(--black);
+  opacity: 0.5;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  &--attack {
+    width: toRem(56);
+    height: toRem(56);
+  }
+}
+
+.chessboard__figures {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}

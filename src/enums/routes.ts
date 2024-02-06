@@ -3,4 +3,5 @@ export enum RoutePaths {
   StoreOverview = '/store',
   UiKit = '/ui-kit',
   ComplexForm = '/complex-form',
+  BoardAnalysis = '/board-analysis',
 }
