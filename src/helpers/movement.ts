@@ -626,6 +626,7 @@ export const getKingAvailableMoves = (
   coords: Coords,
   color: Colors,
   boardConfig: BoardConfiguration,
+  history: GameHistory,
 ) => {
   const availableMoves: Coords[] = []
 
@@ -700,6 +701,78 @@ export const getKingAvailableMoves = (
   )
     availableMoves.push({ x: x + 1, y: y - 1 })
 
+  const moveOrder = color === Colors.White ? 0 : 1
+
+  const isKingMoved = history.some(
+    move => move[moveOrder]?.id === boardConfig?.[y]?.[x]?.id,
+  )
+
+  if (isKingMoved) return availableMoves
+
+  // long castling
+
+  const longRookCoords =
+    color === Colors.White ? { x: 0, y: 7 } : { x: 0, y: 0 }
+
+  const longCastlingCheckCoords =
+    color === Colors.White
+      ? [
+          { x: 2, y: 7 },
+          { x: 3, y: 7 },
+        ]
+      : [
+          { x: 2, y: 0 },
+          { x: 3, y: 0 },
+        ]
+
+  const longRook = boardConfig?.[longRookCoords.y]?.[longRookCoords.x]
+
+  if (
+    longRook?.type === Figures.Rook &&
+    !history.some(move => move[moveOrder]?.id === longRook?.id) &&
+    longCastlingCheckCoords.reduce((acc, coords) => {
+      return (
+        acc &&
+        !boardConfig?.[coords.y]?.[coords.x] &&
+        !isKingCheckedInCoords(coords, color, boardConfig)
+      )
+    }, true)
+  ) {
+    availableMoves.push({ x: 2, y: longRookCoords.y })
+  }
+
+  // short castling
+
+  const shortRookCoords =
+    color === Colors.White ? { x: 7, y: 7 } : { x: 7, y: 0 }
+
+  const shortCastlingCheckCoords =
+    color === Colors.White
+      ? [
+          { x: 5, y: 7 },
+          { x: 6, y: 7 },
+        ]
+      : [
+          { x: 5, y: 0 },
+          { x: 6, y: 0 },
+        ]
+
+  const shortRook = boardConfig?.[shortRookCoords.y]?.[shortRookCoords.x]
+
+  if (
+    shortRook?.type === Figures.Rook &&
+    !history.some(move => move[moveOrder]?.id === shortRook?.id) &&
+    shortCastlingCheckCoords.reduce((acc, coords) => {
+      return (
+        acc &&
+        !boardConfig?.[coords.y]?.[coords.x] &&
+        !isKingCheckedInCoords(coords, color, boardConfig)
+      )
+    }, true)
+  ) {
+    availableMoves.push({ x: 6, y: shortRookCoords.y })
+  }
+
   return availableMoves
 }
 
@@ -728,6 +801,6 @@ export const getAvailableMoves = (
     case Figures.Queen:
       return getQueenAvailableMoves(coords, color, config)
     case Figures.King:
-      return getKingAvailableMoves(coords, color, config)
+      return getKingAvailableMoves(coords, color, config, history)
   }
 }

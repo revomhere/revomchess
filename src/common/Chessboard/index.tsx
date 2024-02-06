@@ -41,9 +41,19 @@ export default function Chessboard({
         newBoardConfig[chosenFigure.y][chosenFigure.x] = null
         newBoardConfig[y][x] = figure
 
+        // En passant
         if (x !== chosenFigure.x && figure?.type === Figures.Pawn) {
           const direction = figure.color === Colors.White ? 1 : -1
           newBoardConfig[y + direction][x] = null
+        }
+
+        // Castling
+        if (figure?.type === Figures.King) {
+          const direction = x - chosenFigure.x > 0 ? 1 : -1
+          const rook = newBoardConfig[y][direction === 1 ? 7 : 0]
+
+          newBoardConfig[y][x - direction] = rook
+          newBoardConfig[y][direction === 1 ? 7 : 0] = null
         }
 
         const move = {
