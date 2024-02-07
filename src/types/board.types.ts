@@ -12,3 +12,10 @@ export type Figure = {
 }
 
 export type BoardConfiguration = (Figure | null)[][]
+
+export type Move = {
+  to: Coords
+  id: number
+}
+
+export type GameHistory = Move[][] // [ [firstWhite, firstBlack] ]
