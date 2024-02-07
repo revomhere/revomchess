@@ -35,6 +35,7 @@ export default function Chessboard({
   const [availableMoves, setAvailableMoves] = useState<boolean[][]>([])
   const [chosenFigure, setChosenFigure] = useState<Coords | null>(null)
   const [figures, setFigures] = useState<(Figure & Coords)[]>([])
+  const [turn, setTurn] = useState<Colors>(Colors.White)
 
   const handleFigureClick = (x: number, y: number) => {
     if (chosenFigure) {
@@ -67,6 +68,7 @@ export default function Chessboard({
 
         updateBoardState(newBoardConfig, move, figure?.color || Colors.White)
 
+        setTurn(turn === Colors.White ? Colors.Black : Colors.White)
         setChosenFigure(null)
         setAvailableMoves([])
 
@@ -81,7 +83,9 @@ export default function Chessboard({
 
     if (!boardConfig?.[y]?.[x]) return
 
-    if (userColor && boardConfig?.[y]?.[x]?.color !== userColor) return
+    if (userColor) setTurn(userColor)
+
+    if (boardConfig?.[y]?.[x]?.color !== turn) return
 
     setChosenFigure({ x, y })
 
