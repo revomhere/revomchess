@@ -131,7 +131,7 @@ const isKingCheckedByKingInCoords = (
   return false
 }
 
-const isKingCheckedInCoords = (
+export const isKingCheckedInCoords = (
   coords: Coords,
   color: Colors,
   boardConfig: BoardConfiguration,
@@ -719,10 +719,12 @@ export const getKingAvailableMoves = (
       ? [
           { x: 2, y: 7 },
           { x: 3, y: 7 },
+          { x: 4, y: 7 },
         ]
       : [
           { x: 2, y: 0 },
           { x: 3, y: 0 },
+          { x: 4, y: 0 },
         ]
 
   const longRook = boardConfig?.[longRookCoords.y]?.[longRookCoords.x]

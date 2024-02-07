@@ -5,7 +5,11 @@ import { HTMLAttributes, useEffect, useState } from 'react'
 
 import { ChessFigure } from '@/common'
 import { Colors, Figures } from '@/enums'
-import { getAvailableMoves, isMoveEnPassant } from '@/helpers'
+import {
+  getAvailableMoves,
+  isKingCheckedInCoords,
+  isMoveEnPassant,
+} from '@/helpers'
 import { BoardConfiguration, Coords, Figure, GameHistory, Move } from '@/types'
 
 type Props = HTMLAttributes<HTMLDivElement> &
@@ -35,7 +39,7 @@ export default function Chessboard({
   const handleFigureClick = (x: number, y: number) => {
     if (chosenFigure) {
       if (availableMoves?.[y]?.[x]) {
-        const newBoardConfig = [...boardConfig]
+        const newBoardConfig = JSON.parse(JSON.stringify(boardConfig))
         const figure = newBoardConfig[chosenFigure.y][chosenFigure.x]
 
         newBoardConfig[chosenFigure.y][chosenFigure.x] = null
@@ -48,7 +52,7 @@ export default function Chessboard({
         }
 
         // Castling
-        if (figure?.type === Figures.King) {
+        if (figure?.type === Figures.King && Math.abs(x - chosenFigure.x) > 1) {
           const direction = x - chosenFigure.x > 0 ? 1 : -1
           const rook = newBoardConfig[y][direction === 1 ? 7 : 0]
 
@@ -81,7 +85,44 @@ export default function Chessboard({
 
     setChosenFigure({ x, y })
 
-    const coords = getAvailableMoves({ x, y }, boardConfig, history)
+    let coords = getAvailableMoves({ x, y }, boardConfig, history)
+
+    const king = figures.find(
+      figure =>
+        figure.type === Figures.King &&
+        figure.color === boardConfig[y][x]?.color,
+    )
+
+    if (
+      king &&
+      isKingCheckedInCoords(
+        { x: king.x, y: king.y },
+        king?.color || Colors.White,
+        boardConfig,
+      )
+    ) {
+      const newBoardConfig = JSON.parse(JSON.stringify(boardConfig))
+      const figure = newBoardConfig[y][x]
+
+      coords = coords.filter(item => {
+        newBoardConfig[y][x] = null
+        newBoardConfig[item.y][item.x] = figure
+
+        // En passant
+        if (x !== item.x && figure?.type === Figures.Pawn) {
+          const direction = figure.color === Colors.White ? 1 : -1
+          newBoardConfig[y + direction][x] = null
+        }
+
+        return !isKingCheckedInCoords(
+          figure.type === Figures.King
+            ? { x: item.x, y: item.y }
+            : { x: king.x, y: king.y },
+          king.color,
+          newBoardConfig,
+        )
+      })
+    }
 
     const newAvailableMoves: boolean[][] = []
 
