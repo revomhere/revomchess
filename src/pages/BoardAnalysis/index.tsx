@@ -3,9 +3,9 @@ import './styles.scss'
 import { motion, MotionProps } from 'framer-motion'
 import { HTMLAttributes, useState } from 'react'
 
-import { Chessboard } from '@/common'
 import { BASIC_CHESSBOARD_CONFIGURATION } from '@/const'
 import { Colors } from '@/enums'
+import { Chessboard } from '@/modules/chessboard/common'
 import { BoardConfiguration, GameHistory, Move } from '@/types'
 
 type Props = HTMLAttributes<HTMLDivElement> & MotionProps

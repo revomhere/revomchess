@@ -3,13 +3,13 @@ import './styles.scss'
 import { motion, MotionProps } from 'framer-motion'
 import { HTMLAttributes, useEffect, useState } from 'react'
 
-import { ChessFigure } from '@/common'
 import { Colors, Figures } from '@/enums'
+import { ChessFigure } from '@/modules/chessboard/common'
 import {
   getAvailableMoves,
   isKingCheckedInCoords,
   isMoveEnPassant,
-} from '@/helpers'
+} from '@/modules/chessboard/helpers'
 import { BoardConfiguration, Coords, Figure, GameHistory, Move } from '@/types'
 
 type Props = HTMLAttributes<HTMLDivElement> &
