@@ -1,5 +1,5 @@
-import { Colors, Figures } from '@/enums'
-import { BoardConfiguration } from '@/types'
+import { Colors, Figures } from '@/modules/chessboard/enums'
+import { BoardConfiguration } from '@/modules/chessboard/types'
 
 export const BASIC_CHESSBOARD_CONFIGURATION: BoardConfiguration = [
   [

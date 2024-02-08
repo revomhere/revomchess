@@ -1,5 +1,5 @@
-import { Colors, Figures } from '@/enums'
-import { BoardConfiguration, Coords, Figure } from '@/types'
+import { Colors, Figures } from '@/modules/chessboard/enums'
+import { BoardConfiguration, Coords, Figure } from '@/modules/chessboard/types'
 
 export const isMoveEnPassant = (
   coords: Coords,

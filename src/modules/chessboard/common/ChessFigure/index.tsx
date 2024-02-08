@@ -3,7 +3,8 @@ import './styles.scss'
 import { motion, MotionProps } from 'framer-motion'
 import { HTMLAttributes, useEffect, useState } from 'react'
 
-import { Colors, Figures, IconNames } from '@/enums'
+import { IconNames } from '@/enums'
+import { Colors, Figures } from '@/modules/chessboard/enums'
 import { UiIcon } from '@/ui'
 
 type Props = HTMLAttributes<HTMLDivElement> &

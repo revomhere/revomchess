@@ -1,4 +1,4 @@
-import { Colors, Figures } from '@/enums'
+import { Colors, Figures } from '@/modules/chessboard/enums'
 
 export type Coords = {
   x: number // 0 - 7

@@ -1,5 +1,9 @@
-import { Colors, Figures } from '@/enums'
-import { BoardConfiguration, Coords, GameHistory } from '@/types'
+import { Colors, Figures } from '@/modules/chessboard/enums'
+import {
+  BoardConfiguration,
+  Coords,
+  GameHistory,
+} from '@/modules/chessboard/types'
 
 const getCoordsForKnightMoves = (coords: Coords) => {
   return [
