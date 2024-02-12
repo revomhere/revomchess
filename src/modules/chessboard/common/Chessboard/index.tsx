@@ -38,7 +38,9 @@ export default function Chessboard({ chessboard, className, ...rest }: Props) {
   }
 
   useEffect(() => {
-    setFigures(getFiguresFromBoardConfig(boardState))
+    setFigures(
+      getFiguresFromBoardConfig(boardState).sort((a, b) => a.id - b.id),
+    )
   }, [boardState])
 
   return (
