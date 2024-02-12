@@ -1,6 +1,6 @@
 .chess-figure {
-  width: toRem(64);
-  height: toRem(64);
+  width: calc(12.5%);
+  height: calc(12.5%);
   position: absolute;
   transition: 0.2s;
 }

@@ -2,17 +2,21 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  width: toRem(64 * 8);
+  height: toRem(64 * 8);
 }
 
 .chessboard__row {
   display: flex;
+  width: 100%;
+  height: calc(12.5%);
 }
 
 .chessboard__cell {
   position: relative;
   cursor: default;
-  width: toRem(64);
-  height: toRem(64);
+  height: 100%;
+  width: calc(12.5%);
 
   &--white {
     background-color: var(--light-square);

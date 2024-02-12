@@ -94,8 +94,8 @@ export default function Chessboard({ chessboard, className, ...rest }: Props) {
                   figure={figure.type}
                   color={figure.color}
                   style={{
-                    top: `calc(${y} * 64px)`,
-                    left: `calc(${x} * 64px)`,
+                    top: `calc(${y} * 12.5%)`,
+                    left: `calc(${x} * 12.5%)`,
                   }}
                 />
               ),
