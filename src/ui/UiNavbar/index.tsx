@@ -16,6 +16,13 @@ export default function UiNavbar({
       <UiButton
         className='ui-navbar__link'
         scheme='flat'
+        text={RoutePaths.BoardAnalysis}
+        routePath={RoutePaths.BoardAnalysis}
+      />
+
+      <UiButton
+        className='ui-navbar__link'
+        scheme='flat'
         text={RoutePaths.StoreOverview}
         routePath={RoutePaths.StoreOverview}
       />

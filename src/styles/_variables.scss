@@ -93,6 +93,22 @@
   --border-secondary-main: #{$border-secondary-main};
   --border-secondary-dark: #{$border-secondary-dark};
 
+  /* chessboard themes colors */
+
+  --light-figure-default: #{$light-figure-default};
+  --dark-square-default: #{$dark-square-default};
+  --light-square-default: #{$light-square-default};
+  --chosen-light-square-default: #{$chosen-light-square-default};
+  --chosen-dark-square-default: #{$chosen-dark-square-default};
+
+  /* chessboard colors */
+
+  --light-figure: var(--light-figure-default);
+  --dark-square: var(--dark-square-default);
+  --light-square: var(--light-square-default);
+  --chosen-light-square: var(--chosen-light-square-default);
+  --chosen-dark-square: var(--chosen-dark-square-default);
+
   /* App variables */
   --app-txt: #{$text-primary-main};
   --app-font-family: 'Roboto', 'Arial', sans-serif;

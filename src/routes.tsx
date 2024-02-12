@@ -13,6 +13,7 @@ export const AppRoutes = () => {
   const StoreOverview = lazy(() => import('@/pages/StoreOverview'))
   const UiKit = lazy(() => import('@/pages/UiKit'))
   const ComplexForm = lazy(() => import('@/pages/ComplexForm'))
+  const BoardAnalysis = lazy(() => import('@/pages/BoardAnalysis'))
 
   const pageAnimationOpts = {
     initial: 'hide',
@@ -52,6 +53,10 @@ export const AppRoutes = () => {
             {
               path: RoutePaths.StoreOverview,
               element: <StoreOverview {...pageAnimationOpts} />,
+            },
+            {
+              path: RoutePaths.BoardAnalysis,
+              element: <BoardAnalysis {...pageAnimationOpts} />,
             },
             {
               path: RoutePaths.Root,
