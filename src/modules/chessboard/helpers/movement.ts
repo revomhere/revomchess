@@ -795,18 +795,63 @@ export const getAvailableMoves = (
   const config = boardConfig || []
   const history = gameHistory || []
 
+  let moves: Coords[] = []
+
   switch (figure.type) {
     case Figures.Pawn:
-      return getPawnAvailableMoves(coords, color, config, history)
+      moves = getPawnAvailableMoves(coords, color, config, history)
+      break
     case Figures.Rook:
-      return getRookAvailableMoves(coords, color, config)
+      moves = getRookAvailableMoves(coords, color, config)
+      break
     case Figures.Bishop:
-      return getBishopAvailableMoves(coords, color, config)
+      moves = getBishopAvailableMoves(coords, color, config)
+      break
     case Figures.Knight:
-      return getKnightAvailableMoves(coords, color, config)
+      moves = getKnightAvailableMoves(coords, color, config)
+      break
     case Figures.Queen:
-      return getQueenAvailableMoves(coords, color, config)
+      moves = getQueenAvailableMoves(coords, color, config)
+      break
     case Figures.King:
-      return getKingAvailableMoves(coords, color, config, history)
+      moves = getKingAvailableMoves(coords, color, config, history)
+      break
   }
+
+  moves = moves.filter(item => {
+    const newBoardConfig = JSON.parse(
+      JSON.stringify(config),
+    ) as BoardConfiguration
+
+    const figure = newBoardConfig[coords.y][coords.x]
+
+    newBoardConfig[coords.y][coords.x] = null
+    newBoardConfig[item.y][item.x] = figure
+
+    let king: Coords | null = null
+
+    if (figure?.type !== Figures.King) {
+      // needed to being able to break the loop
+      for (let i = 0; i <= 63; i++) {
+        const x = i % 8
+        const y = Math.floor(i / 8)
+
+        if (
+          newBoardConfig[y][x]?.type === Figures.King &&
+          newBoardConfig[y][x]?.color === color
+        ) {
+          king = { x, y }
+          break
+        }
+      }
+    }
+
+    return !isKingCheckedInCoords(
+      { x: king?.x ?? item.x, y: king?.y ?? item.y },
+      color,
+      newBoardConfig,
+    )
+  })
+
+  return moves
 }

@@ -21,3 +21,17 @@ export const isMoveEnPassant = (
     boardConfig?.[y + direction]?.[x]?.color !== chosenFigure.color
   )
 }
+
+export const getFiguresFromBoardConfig = (
+  boardConfig: BoardConfiguration,
+): (Figure & Coords)[] => {
+  const figures: (Figure & Coords)[] = []
+
+  boardConfig.forEach((row, y) => {
+    row.forEach((figure, x) => {
+      if (figure) figures.push({ ...figure, x, y })
+    })
+  })
+
+  return figures
+}
